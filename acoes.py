@@ -37,6 +37,6 @@ df = df.sort_values(by='Nota', ascending=False)
 if not os.path.exists('data'):
   os.makedirs('data')
 
-df.to_excel('/app/data/acoes.xlsx', index=False)
+df.to_excel('data/acoes.xlsx', index=False)
 
 print("Dados extraídos com sucesso!")
