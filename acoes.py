@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import os
 from advanced_search import AdvancedSearchFundamentus
 
@@ -16,7 +17,12 @@ filters = {
   'tx_cresc_rec_min': 0.1,
 }
 
-with webdriver.Chrome() as driver:
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
+with webdriver.Chrome(options=chrome_options) as driver:
   advanced_search_fundamentus = AdvancedSearchFundamentus(driver)
 
   df = advanced_search_fundamentus.search("https://www.fundamentus.com.br/buscaavancada.php", filters)
@@ -31,6 +37,6 @@ df = df.sort_values(by='Nota', ascending=False)
 if not os.path.exists('data'):
   os.makedirs('data')
 
-df.to_excel('data/acoes.xlsx', index=False)
+df.to_excel('/app/data/acoes.xlsx', index=False)
 
 print("Dados extraídos com sucesso!")
